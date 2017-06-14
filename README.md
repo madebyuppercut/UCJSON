@@ -1,14 +1,12 @@
 # UCJSON
 
----
-
 UCJSON is a generic JSON serialization library for use in iOS and macOS apps, employing a clean and flexible API.
 
 ## Installation
-Simply download this repository and copy UCJSON.h & UCJSON.m into your project.
+Simply download this repository and copy _UCJSON.h_ & _UCJSON.m_ into your project.
 
 ## Usage
-Adopt the `UCJSONSerializable` protocol for objects that you will be serializing/deserializing (no subclassing required).
+Adopt the `UCJSONSerializable` protocol for objects that you will be serializing/deserializing (no subclassing required!).
 ```
 @interface SerializableClass : NSObject<UCJSONSerializable>
 @property (nonatomic, strong) NSString *aString;
@@ -77,7 +75,7 @@ UCJSON automatically handles the following types:
 - `long` (`NSInteger` on 64-bit platforms) & `unsigned long` (`NSUInteger` on 64-bit platforms)
 - `long long` & `unsigned long long`
 - `float` (`CGFloat` on 32-bit platforms)
-- `double` (`CGFloat` on 32-bit platforms)
+- `double` (`CGFloat` on 64-bit platforms)
 - objects that conform to `UCJSONSerializable`
 
 #### Instance variables
@@ -102,7 +100,7 @@ Arrays must be a homogenous collection of supported types. If an array contains 
 If an array does not contain a homogeneous collection of objects, it can still be serialized using a value transformer by implementing `-valueTransformerForProperty:`.
 
 #### Dictionaries
-Dictionaries must use `NSString`s for keys. Values, like arrays, can be any supported type. If a value in a dictionary is a custom class conforming to `UCJSONSerializable`, implement the `-classForDictionaryObjectWithKeyPath:` method:
+Dictionaries must use `NSString`s as keys. Values, like arrays, can be any supported type. If a value in a dictionary is a custom class conforming to `UCJSONSerializable`, implement the `-classForDictionaryObjectWithKeyPath:` method:
 ```
 - (Class)classForDictionaryObjectWithKeyPath:(NSString *)keyPath {
     NSArray<NSString*> *kpComponents = [keyPath componentsSeparatedByString:@"."];
@@ -127,10 +125,10 @@ C `struct`s and `union`s are handled but require the object to implement the `-v
     return nil;
 }
 ```
-For an example of creating an `NSValueTransformer` subclass, see the `UCStructValueTransformer` class used by `UCSerializableObject` in the unit tests. There are also 2 value transformers included in UCJSON.h/UCJSON.m: one for transforming `NSDate` objects into Unix time, and another for serializing `NSRange` values.
+For an example of creating an `NSValueTransformer` subclass, see the `UCStructValueTransformer` class used by `UCSerializableObject` in the unit tests. There are also 2 value transformers included in _UCJSON.h_/_UCJSON.m_: one for transforming `NSDate` objects into Unix time, and another for serializing `NSRange` values.
 
 #### Dates
-By default, `NSDate` properties are serialized as strings using the RFC 3339 profile of the ISO 8601 standard. To serialize using a different format or standard, implement the `-dateFormatterForDateProperty:` method:
+By default, `NSDate` properties are serialized as strings using the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) profile of the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard. To serialize using a different format or standard, implement the `-dateFormatterForDateProperty:` method:
 ```
 - (NSDateFormatter *)dateFormatterForDateProperty:(NSString *)property {
     if ([property isEqualToString:@"aDate"]) {
@@ -166,4 +164,4 @@ To ignore properties or instance variables from serialization, implement the `-d
 ```
 
 ## License
-UCJSON is released under the MIT license. See LICENSE for more details.
+UCJSON is released under the MIT license. See [LICENSE](https://github.com/madebyuppercut/UCJSON/blob/master/LICENSE.txt) for more details.
