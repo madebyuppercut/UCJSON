@@ -1,0 +1,19 @@
+{
+    "name": "Serialized.json",
+    "aNumber": 21,
+    "anInteger": 2121,
+    "aBool": true,
+    "aCBool": true,
+    "aChar": "q",
+    "aShort": -11,
+    "anInt": 11,
+    "aLong": 44,
+    "aLongLong": -44,
+    "aUChar": "w",
+    "aUShort": 31,
+    "aUInt": 3131,
+    "aULong": 313131,
+    "aULongLong": 31313131,
+    "aFloat": 1.41421356,
+    "aDouble": 2.718281828459045
+}
