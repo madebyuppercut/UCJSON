@@ -2,7 +2,7 @@
 
 UCJSON is a generic JSON serialization library for use in iOS and macOS apps, employing a clean and flexible API. Supported types include all primitives, Objective-C types compatible with the JSON format (arrays, dictionaries, `NSNumber`, and `NSNull`), and C types (`struct` and `union`). Instance variables are also serializable, not just properties.
 
-This frees you up from much of the tedious work in managing the serialization/deserialization process of your model objects. This is especially noticeable during development as properties and instance variables of your classes change (by name and/or type), or are added/removed. Generic serialization utilizing introspection of your models handle much of this boilerplate work for the developer.  
+This frees you up from much of the tedious work in managing the serialization/deserialization process of your model objects. This is especially noticeable during development as properties and instance variables of your classes change (by name and/or type), or are added/removed. Generic serialization utilizing introspection of your models handle much of this boilerplate work for you.  
 
 Note that this library does __not__ work with Swift classes due to differences in the inner workings of Objective-C and Swift. With some basic testing, however, it looks like this library can be interoperable with Swift if the classes you want to serialize are written in Objective-C, then imported via a bridging header into your Swift project.
 
