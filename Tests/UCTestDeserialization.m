@@ -69,10 +69,13 @@
                   @"customDate": customDateString,
                   @"someData": dataString,
                   @"someMutableData": mutableDataString,
+                  @"nullObject": [NSNull null],
                   @"anArray": @[@"three", @"two", @"one"],
                   @"aMutableArray": [NSMutableArray arrayWithObjects:@"three", @"two", @"one", nil],
                   @"aDictionary": @{@"oneKey": @"one", @"twoKey": @"two", @"threeKey": @"three"},
                   @"aMutableDictionary": [NSMutableDictionary dictionaryWithObjectsAndKeys:@"red", @"redKey", @"green", @"greenKey", @"blue", @"blueKey", nil],
+                  @"arrayWithNull": @[@"NotNull", [NSNull null]],
+                  @"dictionaryWithNull": @{@"NotNullKey": @"NotNull", @"NullKey": [NSNull null]},
                   @"foo": @{@"foo": @"bar"},
                   @"aFooArray": @[@{@"foo": @"bar0"}, @{@"foo": @"bar1"}, @{@"foo": @"bar2"}],
                   @"aFooDictionary": @{@"foo0": @{@"foo": @"foo0"}, @"foo1": @{@"foo": @"foo1"}, @"foo2": @{@"foo": @"foo2"}},
@@ -244,6 +247,12 @@
     XCTAssertTrue([deserializedMutableData isEqualToData:[[NSData alloc] initWithBase64EncodedString:self.json[@"someMutableData"] options:NSDataBase64DecodingIgnoreUnknownCharacters]]);
 }
 
+- (void)testDeserializeNull {
+    NSNull *deserializedNull = self.serializableObject.nullObject;
+    XCTAssertNotNil(deserializedNull, @"");
+    XCTAssertEqualObjects(deserializedNull, self.json[@"nullObject"], @"");
+}
+
 #pragma mark - Collections
 // ------------------------------------------------------------------------------------------
 
@@ -271,6 +280,20 @@
     XCTAssertNotNil(deserializedMutableDictionary, @"");
     XCTAssertTrue([deserializedMutableDictionary isKindOfClass:[NSMutableDictionary class]], @"");
     XCTAssertEqualObjects(deserializedMutableDictionary, self.json[@"aMutableDictionary"], @"");
+}
+
+- (void)testDeserializeArrayWithNull {
+    NSArray *deserializedArray = self.serializableObject.arrayWithNull;
+    XCTAssertNotNil(deserializedArray, @"");
+    XCTAssertEqual(deserializedArray.count, [self.json[@"arrayWithNull"] count], @"");
+    XCTAssertEqualObjects(deserializedArray, self.json[@"arrayWithNull"], @"");
+}
+
+- (void)testDeserializeDictionaryWithNull {
+    NSDictionary *deserializedDictionary = self.serializableObject.dictionaryWithNull;
+    XCTAssertNotNil(deserializedDictionary, @"");
+    XCTAssertEqual(deserializedDictionary.count, [self.json[@"dictionaryWithNull"] count], @"");
+    XCTAssertEqualObjects(deserializedDictionary, self.json[@"dictionaryWithNull"], @"");
 }
 
 #pragma mark - Custom objects

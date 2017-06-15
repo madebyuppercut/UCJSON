@@ -69,12 +69,15 @@ typedef union _uc_union UCUnion;
 @property (nonatomic, strong) NSDate *aDate;
 @property (nonatomic, strong) NSData *someData;
 @property (nonatomic, strong) NSMutableData *someMutableData;
+@property (nonatomic, strong) NSNull *nullObject;
 
 // Collections
 @property (nonatomic, strong) NSArray *anArray;
 @property (nonatomic, strong) NSMutableArray *aMutableArray;
 @property (nonatomic, strong) NSDictionary *aDictionary;
 @property (nonatomic, strong) NSMutableDictionary *aMutableDictionary;
+@property (nonatomic, strong) NSArray *arrayWithNull;
+@property (nonatomic, strong) NSDictionary *dictionaryWithNull;
 
 // Custom objects
 @property (nonatomic, strong) UCFoo *foo;

@@ -305,6 +305,17 @@
     XCTAssertTrue([serializedMutableData isEqualToData:testData], @"");
 }
 
+- (void)testSerializeNull {
+    NSNull *testNull = [NSNull null];
+    self.serializableObject.nullObject = testNull;
+    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    
+    XCTAssertNotNil(json, @"");
+    NSNull *serializedNull = [json objectForKey:@"nullObject"];
+    XCTAssertNotNil(serializedNull, @"");
+    XCTAssertEqualObjects(serializedNull, testNull, @"");
+}
+
 #pragma mark - Collections
 // ------------------------------------------------------------------------------------------
 
@@ -352,6 +363,30 @@
     XCTAssertNotNil(serializedMutableDictionary, @"");
     XCTAssertTrue([serializedMutableDictionary isKindOfClass:[NSMutableDictionary class]], @"");
     XCTAssertEqualObjects(serializedMutableDictionary, testDictionary, @"");
+}
+
+- (void)testSerializeArrayWithNull {
+    NSArray *testArray = @[@"NotNull", [NSNull null]];
+    self.serializableObject.arrayWithNull = testArray;
+    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    
+    XCTAssertNotNil(json, @"");
+    NSArray *serializedArray = [json objectForKey:@"arrayWithNull"];
+    XCTAssertNotNil(serializedArray, @"");
+    XCTAssertEqual(serializedArray.count, testArray.count, @"");
+    XCTAssertEqualObjects(serializedArray, testArray, @"");
+}
+
+- (void)testSerializeDictionaryWithNull {
+    NSDictionary *testDictionary = @{@"NotNullKey": @"NotNull", @"NullKey": [NSNull null]};
+    self.serializableObject.dictionaryWithNull = testDictionary;
+    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    
+    XCTAssertNotNil(json, @"");
+    NSDictionary *serializedDictionary = [json objectForKey:@"dictionaryWithNull"];
+    XCTAssertNotNil(serializedDictionary, @"");
+    XCTAssertEqual(serializedDictionary.count, testDictionary.count, @"");
+    XCTAssertEqualObjects(serializedDictionary, testDictionary, @"");
 }
 
 #pragma mark - Custom objects

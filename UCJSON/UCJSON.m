@@ -330,7 +330,7 @@ UCIsClassMutable(Class class) {
         value = [value __deserialize];
     }
     
-    if (UCIsClassMutable(class)) {
+    if (UCIsClassMutable(class) && ![value isEqual:[NSNull null]]) {
         value = [value mutableCopy];
     }
     
