@@ -36,9 +36,19 @@
 - (void)setUp {
     [super setUp];
     
-    // NOTE(christian): Environment variable set in target's scheme.
+    // NOTE(christian): Set this value in the target's scheme:
+    // (This needs to be done manually since Xcode scheme settings are not checked in with the repository.)
+    // - Edit scheme...
+    // - Select Test
+    // - Uncheck 'Use the Run action's arguments and environment variables
+    // - Set 'Expand Environment Variables Based On' to the target
+    // - Add the environment variable: 'Name' = PROJECT_DIR, 'Value' = $PROJECT_DIR
     const char *projectDir = getenv("PROJECT_DIR");
-    self.testsDir = [[NSString stringWithUTF8String:projectDir] stringByAppendingPathComponent:@"Tests"];
+    if (projectDir) {
+        self.testsDir = [[NSString stringWithUTF8String:projectDir] stringByAppendingPathComponent:@"Tests"];
+    } else {
+        XCTAssert(NO, @"PROJECT_DIR environment variable not set in target's scheme!");
+    }
 }
 
 - (void)tearDown {
@@ -47,51 +57,63 @@
 }
 
 - (void)testLoadValidJSONFile {
-    NSError *error;
-    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"Serialized.json"];
-    NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
-    XCTAssertNotNil(json, @"");
-    XCTAssertNil(error, @"");
+    if (self.testsDir) {
+        NSError *error;
+        NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"Serialized.json"];
+        NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+        XCTAssertNotNil(json, @"");
+        XCTAssertNil(error, @"");
+    }
 }
 
 - (void)testLoadUnknownJSONFile {
-    NSError *error;
-    NSString *filePath = [self.testsDir stringByAppendingString:@"Unknown.json"];
-    NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
-    XCTAssertNil(json, @"");
-    XCTAssertNotNil(error, @"");
+    if (self.testsDir) {
+        NSError *error;
+        NSString *filePath = [self.testsDir stringByAppendingString:@"Unknown.json"];
+        NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+        XCTAssertNil(json, @"");
+        XCTAssertNotNil(error, @"");
+    }
 }
 
 - (void)testLoadInvalidJSONFile {
-    NSError *error;
-    NSString *filePath = [self.testsDir stringByAppendingString:@"Invalid.json"];
-    NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
-    XCTAssertNil(json, @"");
-    XCTAssertNotNil(error, @"");
+    if (self.testsDir) {
+        NSError *error;
+        NSString *filePath = [self.testsDir stringByAppendingString:@"Invalid.json"];
+        NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+        XCTAssertNil(json, @"");
+        XCTAssertNotNil(error, @"");
+    }
 }
 
 - (void)testWriteValidJSONToFile {
-    NSError *error;
-    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"ValidOut.json"];
-    BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
-    XCTAssertTrue(success, @"");
-    XCTAssertNil(error, @"");
+    if (self.testsDir) {
+        NSError *error;
+        NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"ValidOut.json"];
+        BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
+        XCTAssertTrue(success, @"");
+        XCTAssertNil(error, @"");
+    }
 }
 
 - (void)testWriteInvalidJSONToFile {
-    NSError *error;
-    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"InvalidOut.json"];
-    BOOL success = [UCJSONSerialization writeJSON:@{@(0): @"zero"} toFile:filePath error:&error];
-    XCTAssertFalse(success, @"");
-    XCTAssertNotNil(error, @"");
+    if (self.testsDir) {
+        NSError *error;
+        NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"InvalidOut.json"];
+        BOOL success = [UCJSONSerialization writeJSON:@{@(0): @"zero"} toFile:filePath error:&error];
+        XCTAssertFalse(success, @"");
+        XCTAssertNotNil(error, @"");
+    }
 }
 
 - (void)testWriteValidJSONToUnknownFilePath {
-    NSError *error;
-    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"/Unknown/Unknown.json"];
-    BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
-    XCTAssertFalse(success, @"");
-    XCTAssertNotNil(error, @"");
+    if (self.testsDir) {
+        NSError *error;
+        NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"/Unknown/Unknown.json"];
+        BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
+        XCTAssertFalse(success, @"");
+        XCTAssertNotNil(error, @"");
+    }
 }
 
 @end
