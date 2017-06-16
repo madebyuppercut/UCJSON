@@ -11,15 +11,11 @@
 		35919ABD1EEB0E7000F5191B /* UCSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919ABC1EEB0E7000F5191B /* UCSerializableObject.m */; };
 		35919ABE1EEB125D00F5191B /* UCJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F98C31ECA5DE800C74977 /* UCJSON.m */; };
 		840A39091EEF2C5E00B31987 /* UCTestDeserialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A39081EEF2C5E00B31987 /* UCTestDeserialization.m */; };
-		84A3692E1EF0840D005ED84B /* Serialized.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A3692D1EF0840D005ED84B /* Serialized.json */; };
 		84A369301EF08731005ED84B /* UCTestFileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3692F1EF08731005ED84B /* UCTestFileOperations.m */; };
-		84A369321EF088B8005ED84B /* Invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A369311EF088B8005ED84B /* Invalid.json */; };
 		84AE9F5F1EF1DAA6009AB544 /* UCSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919ABC1EEB0E7000F5191B /* UCSerializableObject.m */; };
 		84AE9F601EF1DAA9009AB544 /* UCTestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919AB51EEB0D2C00F5191B /* UCTestSerialization.m */; };
 		84AE9F611EF1DAAB009AB544 /* UCTestDeserialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A39081EEF2C5E00B31987 /* UCTestDeserialization.m */; };
 		84AE9F621EF1DAAE009AB544 /* UCTestFileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3692F1EF08731005ED84B /* UCTestFileOperations.m */; };
-		84AE9F631EF1DAB1009AB544 /* Serialized.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A3692D1EF0840D005ED84B /* Serialized.json */; };
-		84AE9F641EF1DAB4009AB544 /* Invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A369311EF088B8005ED84B /* Invalid.json */; };
 		84AE9F651EF1DBA8009AB544 /* UCJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F98C31ECA5DE800C74977 /* UCJSON.m */; };
 /* End PBXBuildFile section */
 
@@ -185,8 +181,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84A3692E1EF0840D005ED84B /* Serialized.json in Resources */,
-				84A369321EF088B8005ED84B /* Invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,8 +188,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84AE9F631EF1DAB1009AB544 /* Serialized.json in Resources */,
-				84AE9F641EF1DAB4009AB544 /* Invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +226,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WP82U438S6;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -399,6 +392,7 @@
 				84AE9F5D1EF1DA67009AB544 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

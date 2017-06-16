@@ -28,7 +28,7 @@
 
 
 @interface UCJSONFileOperationsTestCase : XCTestCase
-@property (nonatomic, strong) NSString *projectDir;
+@property (nonatomic, strong) NSString *testsDir;
 @end
 
 @implementation UCJSONFileOperationsTestCase
@@ -36,7 +36,9 @@
 - (void)setUp {
     [super setUp];
     
-    self.projectDir = @"/projects/Open Source/UCJSON/Tests";
+    // NOTE(christian): Environment variable set in target's scheme.
+    const char *projectDir = getenv("PROJECT_DIR");
+    self.testsDir = [[NSString stringWithUTF8String:projectDir] stringByAppendingPathComponent:@"Tests"];
 }
 
 - (void)tearDown {
@@ -46,7 +48,7 @@
 
 - (void)testLoadValidJSONFile {
     NSError *error;
-    NSString *filePath = [self.projectDir stringByAppendingPathComponent:@"Serialized.json"];
+    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"Serialized.json"];
     NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
     XCTAssertNotNil(json, @"");
     XCTAssertNil(error, @"");
@@ -54,7 +56,7 @@
 
 - (void)testLoadUnknownJSONFile {
     NSError *error;
-    NSString *filePath = [self.projectDir stringByAppendingString:@"Unknown.json"];
+    NSString *filePath = [self.testsDir stringByAppendingString:@"Unknown.json"];
     NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
     XCTAssertNil(json, @"");
     XCTAssertNotNil(error, @"");
@@ -62,7 +64,7 @@
 
 - (void)testLoadInvalidJSONFile {
     NSError *error;
-    NSString *filePath = [self.projectDir stringByAppendingString:@"Invalid.json"];
+    NSString *filePath = [self.testsDir stringByAppendingString:@"Invalid.json"];
     NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
     XCTAssertNil(json, @"");
     XCTAssertNotNil(error, @"");
@@ -70,7 +72,7 @@
 
 - (void)testWriteValidJSONToFile {
     NSError *error;
-    NSString *filePath = [self.projectDir stringByAppendingPathComponent:@"ValidOut.json"];
+    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"ValidOut.json"];
     BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
     XCTAssertTrue(success, @"");
     XCTAssertNil(error, @"");
@@ -78,7 +80,7 @@
 
 - (void)testWriteInvalidJSONToFile {
     NSError *error;
-    NSString *filePath = [self.projectDir stringByAppendingPathComponent:@"InvalidOut.json"];
+    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"InvalidOut.json"];
     BOOL success = [UCJSONSerialization writeJSON:@{@(0): @"zero"} toFile:filePath error:&error];
     XCTAssertFalse(success, @"");
     XCTAssertNotNil(error, @"");
@@ -86,7 +88,7 @@
 
 - (void)testWriteValidJSONToUnknownFilePath {
     NSError *error;
-    NSString *filePath = [self.projectDir stringByAppendingPathComponent:@"/Unknown/Unknown.json"];
+    NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"/Unknown/Unknown.json"];
     BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
     XCTAssertFalse(success, @"");
     XCTAssertNotNil(error, @"");
